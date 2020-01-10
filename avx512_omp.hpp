@@ -11,6 +11,17 @@
  * \warning  The arrays must be cache aligned!
 */
 
+
+#if __has_include(<span>)
+    #include <span>
+#else
+    #include "span.hpp"
+    namespace std
+    {
+        using tcb::span;
+    }
+#endif
+
 #if __has_include (<omp.h>)
     #include <omp.h>
 #endif
@@ -22,18 +33,17 @@
 
 #ifdef __AVX512CD__
 
+/// header for AVX512 intrinsics
+#if __has_include (<zmmintrin.h>)
+    #include <zmmintrin.h>
+#else
+    #include <immintrin.h>
+#endif
+
 // size of the intrinsic (AVX512: 512/8=64) and corresponding number of values of type INTR
 #define AVX512_INTR_SIZE     sizeof(__m512d)
 #define AVX512_REG_SIZE      sizeof(__m512d)/sizeof(INTR)
 
-/// header for AVX512 intrinsics
-#if __has_include (<zmmintrin.h>)
-    #include <zmmintrin.h>
-
-#else
-    #include <immintrin.h>
-
-#endif
 
 /// propietary OpenMP reduction operation for AVX512
 #pragma omp declare reduction \
@@ -45,7 +55,7 @@
 /**\fn        _mm512_reduce_add_pd
  * \brief     Horizontal add function of all four numbers in a 512bit AVX2 double intrinsic
  *
- * \param[in] _a: a 512bit AVX512 intrinsic with 8 double numbers
+ * \param[in] _a   a 512bit AVX512 intrinsic with 8 double numbers
  * \return    The horizontal added intrinsic as a double number
 */
 static inline double _mm512_reduce_add_pd(__m512d _a)
@@ -58,18 +68,20 @@ static inline double _mm512_reduce_add_pd(__m512d _a)
 #endif
 
 
-/**\fn        avx512_omp_arr
+/**\fn        avx512_omp_span
  * \brief     Calculate dot product of two vectors \p x and \p y using 512bit
  *            AVX512 double intrinsics (8 double numbers, entire cache line),
- *            container: C array
+ *            container: C++ span
  *
- * \param[in] x: a (un)aligned C array
- * \param[in] y: a (un)aligned C array
+ * \param[in] x   an aligned C++ span
+ * \param[in] y   an aligned C++ span
  * \return    Dot product of the two vectors
 */
-template <size_t N>
-inline double avx512_omp_arr(double const (&x)[N], double const (&y)[N])
+inline double avx512_omp_span(std::span<double> const &x, std::span<double> const &y)
 {
+    assert(x.size() == y.size());
+    size_t const N = x.size();
+
     __m512d _res = _mm512_setzero_pd();
 
     #pragma omp parallel for shared(x, y) reduction(addpd: _res)

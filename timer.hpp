@@ -19,7 +19,7 @@ class Timer
         std::chrono::high_resolution_clock::time_point _start      = std::chrono::high_resolution_clock::now(); ///< chrono library objects for start and end
         std::chrono::high_resolution_clock::time_point _stop       = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double>                  _start_stop = std::chrono::duration<double>::zero();     ///< chrono library objects for duration
-        double                                         _runtime    = 0;                                         ///< double value of runtime in seconds
+        double                                         _runtime    = 0.0;                                       ///< runtime in seconds
 
     public:
 
@@ -38,9 +38,9 @@ class Timer
 	*/
     double Stop()
     {
-        _stop = std::chrono::high_resolution_clock::now();
+        _stop       = std::chrono::high_resolution_clock::now();
         _start_stop = std::chrono::duration_cast<std::chrono::duration<double>>(_stop-_start);
-        _runtime = _start_stop.count();
+        _runtime    = _start_stop.count();
         return _runtime;
     }
 

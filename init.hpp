@@ -9,6 +9,16 @@
 */
 
 
+#if __has_include(<span>)
+    #include <span>
+#else
+    #include "span.hpp"
+    namespace std
+    {
+        using tcb::span;
+    }
+#endif
+
 #include <assert.h>
 #include <vector>
 #include "align.hpp"
@@ -17,7 +27,7 @@
 /**\fn        init_vec
  * \brief     Initialise vecor of size \p length with random numbers
  *
- * \param[in] length: length of the wished vector
+ * \param[in] length   length of the wished vector
  * \return    A vector of size \p length and random entries between 0 and 1
 */
 template <typename T = double>
@@ -39,13 +49,12 @@ VEC(T) init_vec(size_t const length)
 /**\fn         vec_to_arr
  * \brief      Copy values from the vector \p vec to the array \p arr
  *
- * \param[in]  vec: C++ std vector filled with numbers
- * \param[out] arr: preferably empty C array
+ * \param[in]  vec   C++ std vector filled with numbers
+ * \param[out] arr   preferably empty C++ array
 */
-template <typename T, size_t N>
-void vec_to_arr(VEC(T) const vec, T (&arr)[N])
+template <typename T = double, size_t N>
+void vec_to_arr(VEC(T) const vec, std::array<T,N> &arr)
 {
-    // check if size is compatible
     assert(vec.size() <= N);
 
     for (size_t i = 0; i < vec.size(); ++i)

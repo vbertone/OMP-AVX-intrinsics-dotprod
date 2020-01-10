@@ -9,28 +9,30 @@
 #include "omp_simd.hpp"
 #include "avx_omp.hpp"
 #include "benchmark.hpp"
+#include "constexpr_func.hpp"
 
 
 int main(int argc, char** argv)
 {
     /// benchmark settings
-    size_t constexpr length     = 1e5;    //unpadded length of vector
-    size_t constexpr it         = 100000; //number of iterations for determining performance
-    size_t constexpr no_threads = 1;      //number of OpenMP threads
+    size_t constexpr no_threads = 1;  //number of OpenMP threads
     omp_set_num_threads(no_threads);
+
+    size_t constexpr length = 1e5;    //unpadded length of vector
+    size_t constexpr it     = 100000; //number of iterations for determining performance
 
     /// allocate variables
     // calculate padding manually
-    size_t constexpr padding = ((CACHE_LINE - sizeof(INTR)*length % CACHE_LINE) % CACHE_LINE) / sizeof(INTR) ;
-    size_t constexpr padded = length + padding;
+    size_t constexpr padding = PAD(length, INTR);
+    size_t constexpr padded  = length + padding;
 
     // allocate vector
     VEC(double) const x_vec = init_vec(length);
     VEC(double) const y_vec = init_vec(length);
 
     // allocate aligned and padded array
-    alignas(CACHE_LINE) INTR x_arr[padded];
-    alignas(CACHE_LINE) INTR y_arr[padded];
+    alignas(CACHE_LINE) std::array<INTR,padded> x_arr;
+    alignas(CACHE_LINE) std::array<INTR,padded> y_arr;
     // copy values from vector to array
     vec_to_arr(x_vec, x_arr);
     vec_to_arr(y_vec, y_arr);
@@ -58,23 +60,27 @@ int main(int argc, char** argv)
     std::cout << std::fixed << std::setprecision(3) << std::setfill(' ');
 
     // vector: omp parallel for and simd
-    std::cout << " -Vector OMP SIMD:  ";
-    benchmark_vec(x_vec, y_vec, omp_simd_vec, it);
+    std::cout << " -C++ Vector OMP SIMD:   ";
+    benchmark_fun(x_vec, y_vec, omp_simd_vec, it);
+
+    // span: omp parallel for and simd
+    std::cout << " -C++ Span   OMP SIMD:   ";
+    benchmark_fun<std::span<INTR>>(x_arr, y_arr, omp_simd_span, it);
 
     // array: omp parallel for and simd
-    std::cout << " -Array OMP SIMD:   ";
-    benchmark_arr(x_arr, y_arr, omp_simd_arr, it);
+    std::cout << " -C++ Array  OMP SIMD:   ";
+    benchmark_fun(x_arr, y_arr, omp_simd_arr, it);
 
     // array: manual avx2 vectorisation and omp parallel for
     #ifdef __AVX2__
-    std::cout << " -Array AVX2 OMP:   ";
-    benchmark_arr(x_arr, y_arr, avx2_omp_arr, it);
+        std::cout << " -C++ Array  AVX2 OMP:   ";
+        benchmark_fun<std::span<INTR>>(x_arr, y_arr, avx2_omp_span, it);
     #endif
 
     // array: manual avx512 vectorisation and omp parallel for
     #ifdef __AVX512CD__
-    std::cout << " -Array AVX512 OMP: ";
-    benchmark_arr(x_arr, y_arr, avx512_omp_arr, it);
+        std::cout << " -C++ Array  AVX512 OMP: ";
+        benchmark_fun(x_arr, y_arr, avx512_omp_span, it);
     #endif
 
 	return EXIT_SUCCESS;

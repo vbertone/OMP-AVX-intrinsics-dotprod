@@ -13,6 +13,17 @@
  * \warning  The arrays must be cache aligned!
 */
 
+
+#if __has_include(<span>)
+    #include <span>
+#else
+    #include "span.hpp"
+    namespace std
+    {
+        using tcb::span;
+    }
+#endif
+
 #if __has_include (<omp.h>)
     #include <omp.h>
 #endif
@@ -21,15 +32,15 @@
 #include <vector>
 #include "align.hpp"
 
-
 #ifdef __AVX2__
+
+/// header for AVX2 intrinsics
+#include <immintrin.h>
 
 // size of the intrinsic (AVX2: 256/8=32) and corresponding number of values of type INTR
 #define AVX2_INTR_SIZE     sizeof(__m256d)
 #define AVX2_REG_SIZE      sizeof(__m256d)/sizeof(INTR)
 
-/// header for AVX2 intrinsics
-#include <immintrin.h>
 
 /// propietary OpenMP reduction operation for AVX2
 #pragma omp declare reduction \
@@ -40,7 +51,7 @@
 /**\fn        _mm256_reduce_add_pd
  * \brief     Horizontal add function of all four numbers in a 256bit AVX2 double intrinsic
  *
- * \param[in] _a: a 256bit AVX2 intrinsic with 4 double numbers
+ * \param[in] _a   a 256bit AVX2 intrinsic with 4 double numbers
  * \return    The horizontal added intrinsic as a double number
 */
 static inline double _mm256_reduce_add_pd(__m256d _a)
@@ -53,15 +64,17 @@ static inline double _mm256_reduce_add_pd(__m256d _a)
 /**\fn        avx2_omp_arr
  * \brief     Calculate dot product of two vectors \p x and \p y using 256bit
  *            AVX2 double intrinsics (4 double numbers, half a cache line),
- *            container: C array
+ *            container: C++ span
  *
- * \param[in] x: a (un)aligned C array
- * \param[in] y: a (un)aligned C array
+ * \param[in] x   an aligned C++ span
+ * \param[in] y   an aligned C++ span
  * \return    Dot product of the two vectors
 */
-template <size_t N>
-inline double avx2_omp_arr(double const (&x)[N], double const (&y)[N])
+inline double avx2_omp_span(std::span<double> const &x, std::span<double> const &y)
 {
+    assert(x.size() == y.size());
+    size_t const N = x.size();
+
     // divide cache line into two variables handled by the same processor
     __m256d _res1 = _mm256_setzero_pd();
     __m256d _res2 = _mm256_setzero_pd();

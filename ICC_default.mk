@@ -9,7 +9,7 @@ F77	= ${BINDIR}ifort
 LINKER  = ${CXX}
 
 WARNINGS = -Wall -Weffc++ -Woverloaded-virtual -Wfloat-equal -Wshadow -wd2015,2012 -wn3
-#    -Winline -Wredundant-decls -Wunreachable-code
+           #-Winline -Wredundant-decls -Wunreachable-code
 CXXFLAGS += -std=c++17 -fopenmp -mavx2 -march=native -funroll-all-loops -O3 -DNDEBUG ${WARNINGS} -mkl ${FOUND_CONFIG}
 
 #profiling tools

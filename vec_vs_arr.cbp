@@ -54,10 +54,12 @@
 		<Unit filename="avx512_omp.hpp" />
 		<Unit filename="avx_omp.hpp" />
 		<Unit filename="benchmark.hpp" />
+		<Unit filename="constexpr_func.hpp" />
 		<Unit filename="disclaimer.hpp" />
 		<Unit filename="init.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="omp_simd.hpp" />
+		<Unit filename="span.hpp" />
 		<Unit filename="timer.hpp" />
 		<Extensions>
 			<code_completion />

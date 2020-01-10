@@ -1,0 +1,85 @@
+# depslib dependency file v1.0
+1578619005 source:/home/tobit/Documents/Github/IntrinsicsTest/main.cpp
+	<vector>
+	<string.h>
+	<memory>
+	<iostream>
+	<iomanip>
+	"disclaimer.hpp"
+	"align.hpp"
+	"init.hpp"
+	"omp_simd.hpp"
+	"avx_omp.hpp"
+	"benchmark.hpp"
+	"constexpr_func.hpp"
+
+1578617410 /home/tobit/Documents/Github/IntrinsicsTest/disclaimer.hpp
+	<omp.h>
+	<boost/version.hpp>
+	<unordered_map>
+	<iostream>
+
+1578616152 /home/tobit/Documents/Github/IntrinsicsTest/align.hpp
+	<boost/align/aligned_allocator.hpp>
+	<boost/version.hpp>
+
+1578616840 /home/tobit/Documents/Github/IntrinsicsTest/init.hpp
+	<span>
+	"span.hpp"
+	<assert.h>
+	<vector>
+	"align.hpp"
+
+1578616681 /home/tobit/Documents/Github/IntrinsicsTest/omp_simd.hpp
+	<span>
+	"span.hpp"
+	<omp.h>
+	<assert.h>
+	<vector>
+	"align.hpp"
+
+1578618267 /home/tobit/Documents/Github/IntrinsicsTest/avx_omp.hpp
+	"avx2_omp.hpp"
+	"avx512_omp.hpp"
+
+1578617973 /home/tobit/Documents/Github/IntrinsicsTest/avx2_omp.hpp
+	<span>
+	"span.hpp"
+	<omp.h>
+	<assert.h>
+	<vector>
+	"align.hpp"
+	<immintrin.h>
+
+1578616307 /home/tobit/Documents/Github/IntrinsicsTest/span.hpp
+	<array>
+	<cstddef>
+	<cstdint>
+	<type_traits>
+	<cstdio>
+	<stdexcept>
+
+1578618200 /home/tobit/Documents/Github/IntrinsicsTest/avx512_omp.hpp
+	<span>
+	"span.hpp"
+	<omp.h>
+	<assert.h>
+	<vector>
+	"align.hpp"
+	<zmmintrin.h>
+	<immintrin.h>
+
+1578617245 /home/tobit/Documents/Github/IntrinsicsTest/benchmark.hpp
+	<span>
+	"span.hpp"
+	"align.hpp"
+	"timer.hpp"
+	"omp_simd.hpp"
+	"avx_omp.hpp"
+
+1578616241 /home/tobit/Documents/Github/IntrinsicsTest/timer.hpp
+	<chrono>
+
+1578619177 /home/tobit/Documents/Github/IntrinsicsTest/constexpr_func.hpp
+	<limits>
+

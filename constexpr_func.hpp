@@ -34,7 +34,7 @@ namespace cef
     template <typename T = double>
     T constexpr sqrt(T const x)
     {
-        assert(std::numeric_limits<T>::is_specialized());
+        assert(std::numeric_limits<T>::is_specialized);
 
         T constexpr max_inf = std::numeric_limits<T>::has_infinity
                               ? std::numeric_limits<T>::infinity()

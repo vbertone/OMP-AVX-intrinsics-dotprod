@@ -23,7 +23,7 @@ namespace cef
      * \param[in] prev   the result from the previous iteration
      * \return    The square root of \param x
     */
-    double constexpr sqrtNewton(double const x, double const curr, double const prev)
+    constexpr double sqrtNewton(double const x, double const curr, double const prev)
     {
         return curr == prev
                ? curr
@@ -31,12 +31,12 @@ namespace cef
     }
 
     template <typename T = double>
-    T constexpr sqrt(T const x)
+    constexpr T sqrt(T const x)
     {
         assert(std::numeric_limits<T>::is_specialized);
         assert(x >= 0);
 
-        T constexpr ret_NaN = std::numeric_limits<T>::has_quiet_NaN
+        constexpr T ret_NaN = std::numeric_limits<T>::has_quiet_NaN
                               ? std::numeric_limits<T>::quiet_NaN()
                               : std::numeric_limits<T>::min();
 

@@ -15,16 +15,16 @@
 int main(int argc, char** argv)
 {
     /// benchmark settings
-    size_t constexpr no_threads = 1;  //number of OpenMP threads
+    constexpr size_t no_threads = 1;  //number of OpenMP threads
     omp_set_num_threads(no_threads);
 
-    size_t constexpr length = 1e5;    //unpadded length of vector
-    size_t constexpr it     = 100000; //number of iterations for determining performance
+    constexpr size_t length = 1e5;    //unpadded length of vector
+    constexpr size_t it     = 100000; //number of iterations for determining performance
 
     /// allocate variables
     // calculate padding manually
-    size_t constexpr padding = PAD(length, INTR);
-    size_t constexpr padded  = length + padding;
+    constexpr size_t padding = PAD(length, INTR);
+    constexpr size_t padded  = length + padding;
 
     // allocate vector
     VEC(double) const x_vec = init_vec(length);

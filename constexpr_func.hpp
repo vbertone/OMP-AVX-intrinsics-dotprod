@@ -34,14 +34,14 @@ namespace cef
     template <typename T = double>
     T constexpr sqrt(T const x)
     {
-		assert(std::numeric_limits<T>::is_specialized());
+        assert(std::numeric_limits<T>::is_specialized());
 
-		T constexpr max_inf = std::numeric_limits<T>::has_infinity
-		                      ? std::numeric_limits<T>::infinity()
-		                      : std::numeric_limits<T>::max();
-		T constexpr ret_NaN = std::numeric_limits<T>::has_quiet_NaN
-		                      ? std::numeric_limits<T>::quiet_NaN()
-		                      : std::numeric_limits<T>::min();
+        T constexpr max_inf = std::numeric_limits<T>::has_infinity
+                              ? std::numeric_limits<T>::infinity()
+                              : std::numeric_limits<T>::max();
+        T constexpr ret_NaN = std::numeric_limits<T>::has_quiet_NaN
+                              ? std::numeric_limits<T>::quiet_NaN()
+                              : std::numeric_limits<T>::min();
 
         return ((x >= static_cast<T>(0.0)) && (x < max_inf))
                ? sqrtNewton(x, x, static_cast<T>(0.0))

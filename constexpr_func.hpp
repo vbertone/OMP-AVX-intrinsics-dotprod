@@ -9,6 +9,7 @@
 
 
 #include <limits>
+#include <assert.h>
 
 
 namespace cef
@@ -20,22 +21,31 @@ namespace cef
      * \param[in] x      the number of interest
      * \param[in] curr   the result from the current iteration
      * \param[in] prev   the result from the previous iteration
-     * \return    the square root of \param x
+     * \return    The square root of \param x
     */
     template <typename T = double>
     T constexpr sqrtNewton(T const x, T const curr, T const prev)
     {
         return curr == prev
                ? curr
-               : sqrtNewton(x, static_cast<T>(0.5 * (curr + x / static_cast<double>(curr))), curr);
+               : sqrtNewton(x, static_cast<T>(0.5 * (curr + x / static_cast<long double>(curr))), curr);
     }
 
     template <typename T = double>
     T constexpr sqrt(T const x)
     {
-        return x >= static_cast<T>(0.0) && x < std::numeric_limits<double>::infinity()
+		assert(std::numeric_limits<T>::is_specialized());
+
+		T constexpr max_inf = std::numeric_limits<T>::has_infinity
+		                      ? std::numeric_limits<T>::infinity()
+		                      : std::numeric_limits<T>::max();
+		T constexpr ret_NaN = std::numeric_limits<T>::has_quiet_NaN
+		                      ? std::numeric_limits<T>::quiet_NaN()
+		                      : std::numeric_limits<T>::min();
+
+        return ((x >= static_cast<T>(0.0)) && (x < max_inf))
                ? sqrtNewton(x, x, static_cast<T>(0.0))
-               : std::numeric_limits<double>::quiet_NaN();
+               : ret_NaN;
     }
 }
 

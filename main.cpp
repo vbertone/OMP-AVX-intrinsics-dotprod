@@ -80,7 +80,7 @@ int main(int argc, char** argv)
     // array: manual avx512 vectorisation and omp parallel for
     #ifdef __AVX512CD__
         std::cout << " -C++ Array  AVX512 OMP: ";
-        benchmark_fun(x_arr, y_arr, avx512_omp_span, it);
+        benchmark_fun<std::span<INTR>>(x_arr, y_arr, avx512_omp_span, it);
     #endif
 
 	return EXIT_SUCCESS;

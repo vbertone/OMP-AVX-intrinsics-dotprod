@@ -30,7 +30,7 @@ Interestingly vectors do not seem to be fully cache-line aligned by both compile
 - `vec_vs_arr.cbp`, `vec_vs_arr.depend` and `vec_vs_arr.layout` CodeBlocks project files
 
 
-## Launch my solution
+## Launch it
 Copy this folder or directly **clone this repository** by typing
 ```
 $ git clone https://github.com/2b-t/OMP-AVX-intrinsics-dotprod.git 

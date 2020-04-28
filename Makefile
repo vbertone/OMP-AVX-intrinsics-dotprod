@@ -1,25 +1,56 @@
-# Choose compiler
+# Makefile
+# Tobit Flatscher - github.com/2b-t (2020)
 
-#use GNU compiler collection
-# COMPILER = GCC_
-#use Intel compiler
-COMPILER = ICC_
-#alternatively from the shell
-#export COMPILER=GCC_
-#or
-#make COMPILER=GCC_
+# Compiler settings (alternatively: export COMPILER=)
+COMPILER = GCC
 
-# Define source files that must be compuled
-SOURCES = main.cpp
-OBJECTS = $(SOURCES:.cpp=.o)
-PROGRAM	= main.${COMPILER}
-
-CXXFLAGS  += -g
-LINKFLAGS += -g
-
-ifndef COMPILER
-  COMPILER = GCC_
+# compiler settings
+ifeq ($(COMPILER),ICC)
+	# Intel compiler ICC
+	CXX        = icpc
+	LINKER     = icpc
+	CXXFLAGS  += -qopenmp
+	LINKFLAGS += -qopenmp
+	COMPILER   = ICC
+else
+	# Gnu Compiler GCC
+	CXX        = g++
+	LINKER     = g++
+	CXXFLAGS  += -fopenmp
+	LINKFLAGS += -lgomp
+	COMPILER   = GCC
 endif
 
-# Include compiler settings file
-include ${COMPILER}default.mk
+# Define source files to be compiled
+SOURCES  = $(wildcard *.cpp)
+INCLUDES = $(wildcard *.hpp)
+OBJECTS  = $(SOURCES:.cpp=.o)
+PROGRAM	 = main.$(COMPILER)
+
+# compiler flags
+WARNINGS   = -Wall -pedantic -Wextra -Weffc++ -Woverloaded-virtual  -Wfloat-equal -Wshadow -Wredundant-decls -Winline -fmax-errors=1
+CXXFLAGS  += -O3 -std=c++17 -funroll-all-loops -finline-functions -flto -mavx2 -march=native -DNDEBUG
+LINKFLAGS += -O3
+
+# Make commands
+default: $(PROGRAM)
+
+$(PROGRAM):	$(OBJECTS)
+	$(LINKER)  $^  $(LINKFLAGS) -o $@
+
+clean:
+	@rm -f $(PROGRAM) $(OBJECTS)
+
+run: clean $(PROGRAM)
+	./$(PROGRAM)
+
+doc:
+	doxygen Doxyfile
+
+.cpp.o:
+	$(CXX) -c $(CXXFLAGS) $<
+
+info:
+	@echo "Show optimization flags"
+	$(CXX) --version
+	@echo $(CXXFLAGS)

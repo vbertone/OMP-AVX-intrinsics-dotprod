@@ -10,9 +10,7 @@ Interestingly vectors do not seem to be fully cache-line aligned by both compile
 
 ### The files
 
-- `GCC_default.mk` Make settings for GNU Compiler Collection GCC compiler
-- `ICC_default.mk` Make settings for Intel Compiler Collection ICC (if available)
-- `Makefile` The Make-file (default ICC)
+- `Makefile` The Make-file (default GCC) and settings for the ICC and GCC compiler
 - `align.hpp` Defines the cache-line-alignment relevant C++ macros (call to a Boost-vector if available)
 - `avx2_omp.hpp` Implementation of dot-product by means of manual AVX2 intrinsics and multi-threading with OpenMP
 - `avx512_omp.hpp` Implementation of dot-product by means of manual AVX512 intrinsics and multi-threading with OpenMP
@@ -21,8 +19,8 @@ Interestingly vectors do not seem to be fully cache-line aligned by both compile
 - `constexpr_func.hpp` The implementation of a square root with the recursive Newton-Raphson method that can be evaluated to constant expression at compile time
 - `disclaimer.hpp` Prints out a disclaimer and tries to identify operating, compiler and features at compile time
 - `init.hpp` Initialises vectors and arrays with random numbers
-- `main.GCC_` The executable compiled with GCC
-- `main.ICC_` The executable compiled with ICC
+- `main.GCC` The executable compiled with GCC
+- `main.ICC` The executable compiled with ICC
 - `main.cpp` The main-file of this program
 - `omp_simd.hpp` Implementation of dot-product by means of auto-vectorisation and multi-threading with OpenMP
 - `span.hpp` [std::span](https://en.cppreference.com/w/cpp/container/span)-like container by [Tristan Brindle](https://github.com/tcbrindle/span) that will be introduced in C++20
@@ -39,13 +37,16 @@ Make sure if the Intel compiler collection is installed on your system by openin
 ```
 $ icc -v
 ```
-If it is not available on your system [install it](https://software.intel.com/en-us/compilers) (it is free of charge for students) or change the corresponding lines of the Make-file `Makefile`
+If it is not available on your system [install it](https://software.intel.com/en-us/compilers) (it is free of charge for students) and change the corresponding lines of the Make-file `Makefile`
 ```
-3  #use GNU compiler collection
-4  COMPILER = GCC_
-5  #use Intel compiler
-6  # COMPILER = ICC_
+1  # Makefile
+2  # Tobit Flatscher - github.com/2b-t (2020)
+3
+4  # Compiler settings (alternatively: export COMPILER=)
+5  COMPILER = ICC
+6
 ```
+else you can leave it on `GCC` and use the Gnu Compiler Collection only.
 Finally compile it by typing
 ```
 $ make clean

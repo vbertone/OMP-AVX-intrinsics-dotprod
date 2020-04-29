@@ -10,22 +10,25 @@ Interestingly vectors do not seem to be fully cache-line aligned by both compile
 
 ### The files
 
+- `/bin` Folder for compiled binaries
+- `/obj` Folder for object files
+- `/src` Folder for source and header files
 - `Makefile` The Make-file (default GCC) and settings for the ICC and GCC compiler
-- `align.hpp` Defines the cache-line-alignment relevant C++ macros (call to a Boost-vector if available)
-- `avx2_omp.hpp` Implementation of dot-product by means of manual AVX2 intrinsics and multi-threading with OpenMP
-- `avx512_omp.hpp` Implementation of dot-product by means of manual AVX512 intrinsics and multi-threading with OpenMP
-- `avx_omp.hpp` Determine which version of AVX is available
-- `benchmark.hpp` Generic functions for benchmarking
-- `constexpr_func.hpp` The implementation of a square root with the recursive Newton-Raphson method that can be evaluated to constant expression at compile time
-- `disclaimer.hpp` Prints out a disclaimer and tries to identify operating, compiler and features at compile time
-- `init.hpp` Initialises vectors and arrays with random numbers
-- `main.GCC` The executable compiled with GCC
-- `main.ICC` The executable compiled with ICC
-- `main.cpp` The main-file of this program
-- `omp_simd.hpp` Implementation of dot-product by means of auto-vectorisation and multi-threading with OpenMP
-- `span.hpp` [std::span](https://en.cppreference.com/w/cpp/container/span)-like container by [Tristan Brindle](https://github.com/tcbrindle/span) that will be introduced in C++20
-- `timer.hpp` A simple wrapper for the chrono-library timer
-- `vec_vs_arr.cbp`, `vec_vs_arr.depend` and `vec_vs_arr.layout` CodeBlocks project files
+- `vec_vs_arr.cbp` CodeBlocks project files
+- `bin/main.GCC` The executable compiled with GCC
+- `bin/main.ICC` The executable compiled with ICC
+- `src/align.hpp` Defines the cache-line-alignment relevant C++ macros (call to a Boost-vector if available)
+- `src/avx2_omp.hpp` Implementation of dot-product by means of manual AVX2 intrinsics and multi-threading with OpenMP
+- `src/avx512_omp.hpp` Implementation of dot-product by means of manual AVX512 intrinsics and multi-threading with OpenMP
+- `src/avx_omp.hpp` Determine which version of AVX is available
+- `src/benchmark.hpp` Generic functions for benchmarking
+- `src/constexpr_func.hpp` The implementation of a square root with the recursive Newton-Raphson method that can be evaluated to constant expression at compile time
+- `src/disclaimer.hpp` Prints out a disclaimer and tries to identify operating, compiler and features at compile time
+- `src/init.hpp` Initialises vectors and arrays with random numbers
+- `src/main.cpp` The main-file of this program
+- `src/omp_simd.hpp` Implementation of dot-product by means of auto-vectorisation and multi-threading with OpenMP
+- `src/span.hpp` [std::span](https://en.cppreference.com/w/cpp/container/span)-like container by [Tristan Brindle](https://github.com/tcbrindle/span) that will be introduced in C++20
+- `src/timer.hpp` A simple wrapper for the chrono-library timer
 
 
 ## Launch it

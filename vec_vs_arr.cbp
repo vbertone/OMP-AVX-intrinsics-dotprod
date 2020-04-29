@@ -49,18 +49,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="align.hpp" />
-		<Unit filename="avx2_omp.hpp" />
-		<Unit filename="avx512_omp.hpp" />
-		<Unit filename="avx_omp.hpp" />
-		<Unit filename="benchmark.hpp" />
-		<Unit filename="constexpr_func.hpp" />
-		<Unit filename="disclaimer.hpp" />
-		<Unit filename="init.hpp" />
-		<Unit filename="main.cpp" />
-		<Unit filename="omp_simd.hpp" />
-		<Unit filename="span.hpp" />
-		<Unit filename="timer.hpp" />
+		<Unit filename="src/align.hpp" />
+		<Unit filename="src/avx2_omp.hpp" />
+		<Unit filename="src/avx512_omp.hpp" />
+		<Unit filename="src/avx_omp.hpp" />
+		<Unit filename="src/benchmark.hpp" />
+		<Unit filename="src/constexpr_func.hpp" />
+		<Unit filename="src/disclaimer.hpp" />
+		<Unit filename="src/init.hpp" />
+		<Unit filename="src/main.cpp" />
+		<Unit filename="src/omp_simd.hpp" />
+		<Unit filename="src/span.hpp" />
+		<Unit filename="src/timer.hpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

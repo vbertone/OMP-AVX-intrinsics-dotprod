@@ -2,7 +2,7 @@
 # Tobit Flatscher - github.com/2b-t (2020)
 
 # Compiler settings (alternatively: export COMPILER=)
-COMPILER = ICC
+COMPILER = GCC
 
 # Define directories
 SRCDIR   = src
@@ -17,8 +17,8 @@ PROGRAM	 = main.$(COMPILER)
 
 # compiler flags
 WARNINGS   = -Wall -pedantic -Wextra -Weffc++ -Woverloaded-virtual  -Wfloat-equal -Wshadow -Wredundant-decls -Winline -fmax-errors=1
-CXXFLAGS  += -O3 -std=c++17 -funroll-all-loops -finline-functions -mavx2 -march=native -DNDEBUG
-LINKFLAGS += -O3
+CXXFLAGS  += -std=c++17 -O3 -flto -funroll-all-loops -finline-functions -mavx2 -march=native -DNDEBUG
+LINKFLAGS += -O3 -flto
 
 # compiler settings
 ifeq ($(COMPILER),ICC)
@@ -41,10 +41,12 @@ endif
 default: $(BINDIR)/$(PROGRAM)
 
 $(BINDIR)/$(PROGRAM): $(OBJECTS)
+	@mkdir -p $(@D)
 	$(LINKER)  $(OBJECTS)  $(LINKFLAGS) -o $@
 	@echo "Linking complete!"
 	
 $(OBJECTS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@echo "Compiled "$<" successfully!"
 

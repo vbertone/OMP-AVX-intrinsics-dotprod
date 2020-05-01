@@ -1,7 +1,7 @@
 # Makefile
 # Tobit Flatscher - github.com/2b-t (2020)
 
-# Compiler settings (alternatively: export COMPILER=)
+# Compiler settings: ICC or GCC (alternatively: export COMPILER=)
 COMPILER = GCC
 
 # Define directories
@@ -29,7 +29,7 @@ ifeq ($(COMPILER),ICC)
 	LINKFLAGS += -qopenmp
 	COMPILER   = ICC
 else
-	# Gnu Compiler GCC
+	# Gnu compiler GCC
 	CXX        = g++
 	LINKER     = g++
 	CXXFLAGS  += -fopenmp

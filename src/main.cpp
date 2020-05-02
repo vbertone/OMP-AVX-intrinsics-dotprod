@@ -39,9 +39,10 @@ int main(int argc, char** argv)
 
 
     /// print disclaimer
-    if ((argc > 1) && (strcmp(argv[1], "--version") == 0))
+    if ( (argc > 1) && ((strcmp(argv[1], "--version") == 0) || (strcmp(argv[1], "--v") == 0)) )
     {
         print_disclaimer();
+        exit(EXIT_SUCCESS);
     }
 
 

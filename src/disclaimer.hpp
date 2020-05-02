@@ -25,7 +25,7 @@
 void print_disclaimer()
 {
     /// check for vectorisation, boost and OpenMP
-    std::cout << "github.com/2b-t (2019)" << std::endl;
+    std::cout << "Author: Tobit Flatscher - github.com/2b-t (2019)" << std::endl;
     std::cout << std::endl;
 
     std::cout << "COMPILER SETTINGS" << std::endl;
@@ -65,12 +65,22 @@ void print_disclaimer()
 
     std::cout << " OpenMP ";
     #ifdef _OPENMP
-        std::unordered_map<unsigned,std::string> const map{{200505,"2.5"},
-                                                           {200805,"3.0"},
-                                                           {201107,"3.1"},
-                                                           {201307,"4.0"},
-                                                           {201511,"4.5"}};
-        std::cout << "version " << map.at(_OPENMP) << " ";
+        std::unordered_map<unsigned int,std::string> const mapOMP{{200505,"2.5"},
+                                                                  {200805,"3.0"},
+                                                                  {201107,"3.1"},
+                                                                  {201307,"4.0"},
+                                                                  {201511,"4.5"}};
+
+        std::string versionOMP;
+        if (mapOMP.find(_OPENMP) == mapOMP.end())
+        {
+            versionOMP = "unknown";
+        }
+        else
+        {
+            versionOMP = mapOMP.at(_OPENMP);
+        }
+        std::cout << "version " << versionOMP << " ";
         size_t       omp_curr_threads = omp_get_max_threads();
         size_t const omp_max_threads  = omp_get_num_procs();
         std::cout << "(currently running on " << omp_curr_threads

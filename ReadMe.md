@@ -10,9 +10,9 @@ Interestingly vectors do not seem to be fully cache-line aligned by both compile
 
 ### The files
 
-- `/bin` Folder for compiled binaries
-- `/obj` Folder for object files
-- `/src` Folder for source and header files
+- `bin/` Folder for compiled binaries
+- `obj/` Folder for object files
+- `src/` Folder for source and header files
 - `Makefile` The Make-file (default GCC) and settings for the ICC and GCC compiler
 - `vec_vs_arr.cbp` CodeBlocks project files
 - `bin/main.GCC` The executable compiled with GCC

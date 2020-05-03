@@ -20,7 +20,7 @@
 
 
 /**\fn        print_disclaimer
- * \brief     Print small disclaimer and compiler settings in console
+ * \brief     Print small disclaimer and compiler settings to console
 */
 void print_disclaimer()
 {
@@ -55,7 +55,7 @@ void print_disclaimer()
     #endif
 
     #ifdef __cplusplus
-        std::cout << " C++";
+        std::cout << " C++ ";
         #if __cplusplus > 201700
             std::cout << "17";
         #endif

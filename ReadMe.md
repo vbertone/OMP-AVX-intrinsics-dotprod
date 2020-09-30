@@ -1,6 +1,6 @@
 # Dot product benchmark
 
-*Author: Tobit Flatscher (December 2019)
+*Author: [Tobit Flatscher](https://github.com/2b-t) (December 2019)
 
 ## Overview
 These are several **cache-optimised implementations of the simple dot product** of two vectors. The dot product is calculated in parallel using **multi-threading with OpenMP** and **vectorisation** either with OpenMP or manually with **AVX2 or AVX512 intrinsics**.

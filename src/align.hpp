@@ -18,9 +18,10 @@ typedef double        INTR;
 
 /// turn boost library aligned allocator on and off with variadic macro
 #if __has_include (<boost/align/aligned_allocator.hpp>)
-    #include <boost/align/aligned_allocator.hpp>
-    #include <boost/version.hpp>
-    #define VEC(T) std::vector<T, boost::alignment::aligned_allocator<T, CACHE_LINE>>
+//    #include <boost/align/aligned_allocator.hpp>
+//    #include <boost/version.hpp>
+//    #define VEC(T) std::vector<T, boost::alignment::aligned_allocator<T, CACHE_LINE>>
+    #define VEC(T) std::vector<T>
 #else
     #define VEC(T) std::vector<T>
 #endif

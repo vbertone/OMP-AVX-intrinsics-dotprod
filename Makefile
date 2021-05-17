@@ -16,7 +16,7 @@ PROGRAM	 = main.$(COMPILER)
 
 # Compiler flags
 WARNINGS  = -Wall -pedantic -Wextra -Weffc++ -Woverloaded-virtual  -Wfloat-equal -Wshadow -Wredundant-decls -Winline -fmax-errors=1
-CXXFLAGS += -std=c++17 -O3 -flto -funroll-all-loops -finline-functions -mavx2 -march=native -DNDEBUG
+CXXFLAGS += -std=c++17 -O3 -flto -funroll-all-loops -finline-functions -mavx2 -march=native -DNDEBUG -I./Fastor -mfma -finline-limit=1000000 -ffp-contract=fast
 LDFLAGS  += -O3 -flto
 
 # Compiler settings for specific compiler
@@ -43,7 +43,7 @@ $(BINDIR)/$(PROGRAM): $(OBJECTS)
 	@mkdir -p $(@D)
 	$(LD)  $(OBJECTS)  $(LDFLAGS) -o $@
 	@echo "Linking complete!"
-	
+
 $(OBJECTS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@

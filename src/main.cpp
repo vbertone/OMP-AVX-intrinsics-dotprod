@@ -10,12 +10,13 @@
 #include "avx_omp.hpp"
 #include "benchmark.hpp"
 #include "constexpr_func.hpp"
+#include <Fastor/Fastor.h>
 
 
 int main(int argc, char** argv)
 {
     /// benchmark settings
-    constexpr size_t no_threads = 1;  //number of OpenMP threads
+    constexpr size_t no_threads = 8;  //number of OpenMP threads
     omp_set_num_threads(no_threads);
 
     constexpr size_t length = 1e5;    //unpadded length of vector
@@ -83,6 +84,23 @@ int main(int argc, char** argv)
         std::cout << " -C++ Array  AVX512 OMP: ";
         benchmark_fun<std::span<INTR>>(x_arr, y_arr, avx512_omp_span, it);
     #endif
+
+    // Fastor
+    std::cout << " -C++ Fastor:            ";
+    Fastor::Tensor<double,length> x_tensor(x_vec);
+    Fastor::Tensor<double,length> y_tensor(y_vec);
+    Timer stopwatch;
+    stopwatch.Start();
+
+    for (size_t i = 0; i < it; ++i)
+    {
+      auto res = Fastor::einsum<Fastor::Index<0>,Fastor::Index<0> > (x_tensor, y_tensor);
+      Fastor::unused(res);
+    }
+
+    stopwatch.Stop();
+    std::cout << " runtime: " << stopwatch.GetRuntime() << ", result: " << Fastor::einsum<Fastor::Index<0>,Fastor::Index<0> > (x_tensor, y_tensor) << std::endl;
+
 
 	return EXIT_SUCCESS;
 }

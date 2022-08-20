@@ -16,7 +16,7 @@ PROGRAM	 = main.$(COMPILER)
 
 # Compiler flags
 WARNINGS  = -Wall -pedantic -Wextra -Weffc++ -Woverloaded-virtual  -Wfloat-equal -Wshadow -Wredundant-decls -Winline -fmax-errors=1
-CXXFLAGS += -std=c++20 -O3 -flto -funroll-all-loops -finline-functions -mavx2 -march=native -DNDEBUG -mavx512f
+CXXFLAGS += -std=c++20 -O3 -flto -funroll-all-loops -finline-functions -mavx2 -mavx512f -march=cascadelake -DNDEBUG
 LDFLAGS  += -O3 -flto
 
 # Compiler settings for specific compiler

@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     constexpr size_t no_threads = 1;  //number of OpenMP threads
     omp_set_num_threads(no_threads);
 
-    constexpr size_t length = 1e5;    //unpadded length of vector
+    constexpr size_t length = 1e5 + 1;    //unpadded length of vector
     constexpr size_t it     = 100000; //number of iterations for determining performance
 
     /// allocate variables

@@ -51,21 +51,21 @@
     initializer(omp_priv = _mm512_setzero_pd())
 
 
-#ifndef __INTEL_COMPILER
-/**\fn        _mm512_reduce_add_pd
- * \brief     Horizontal add function of all four numbers in a 512bit AVX2 double intrinsic
- *
- * \param[in] _a   a 512bit AVX512 intrinsic with 8 double numbers
- * \return    The horizontal added intrinsic as a double number
-*/
-static inline double _mm512_reduce_add_pd(__m512d _a)
-{
-    __m256d _b = _mm256_add_pd(_mm512_castpd512_pd256(_a), _mm512_extractf64x4_pd(_a, 1));
-    __m128d _c = _mm_add_pd(_mm256_castpd256_pd128(_b), _mm256_extractf128_pd(_b, 1));
-    double const *f = (double*)(&_c);
-    return _mm_cvtsd_f64(_c) + f[1];
-}
-#endif
+// #ifndef __INTEL_COMPILER
+// /**\fn        _mm512_reduce_add_pd
+//  * \brief     Horizontal add function of all four numbers in a 512bit AVX2 double intrinsic
+//  *
+//  * \param[in] _a   a 512bit AVX512 intrinsic with 8 double numbers
+//  * \return    The horizontal added intrinsic as a double number
+// */
+// static inline double _mm512_reduce_add_pd(__m512d _a)
+// {
+//     __m256d _b = _mm256_add_pd(_mm512_castpd512_pd256(_a), _mm512_extractf64x4_pd(_a, 1));
+//     __m128d _c = _mm_add_pd(_mm256_castpd256_pd128(_b), _mm256_extractf128_pd(_b, 1));
+//     double const *f = (double*)(&_c);
+//     return _mm_cvtsd_f64(_c) + f[1];
+// }
+// #endif
 
 
 /**\fn        avx512_omp_span

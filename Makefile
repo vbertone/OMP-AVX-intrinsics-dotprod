@@ -16,21 +16,21 @@ PROGRAM	 = main.$(COMPILER)
 
 # Compiler flags
 WARNINGS  = -Wall -pedantic -Wextra -Weffc++ -Woverloaded-virtual  -Wfloat-equal -Wshadow -Wredundant-decls -Winline -fmax-errors=1
-CXXFLAGS += -std=c++17 -O3 -flto -funroll-all-loops -finline-functions -mavx2 -march=native -DNDEBUG
+CXXFLAGS += -std=c++20 -O3 -flto -funroll-all-loops -finline-functions -mavx2 -march=native -DNDEBUG
 LDFLAGS  += -O3 -flto
 
 # Compiler settings for specific compiler
 ifeq ($(COMPILER),ICC)
-	# Intel compiler ICC
+        # Intel compiler ICC
 	CXX       = icpc
 	LD        = icpc
 	CXXFLAGS += -fopenmp
 	LDFLAGS  += -qopenmp
 	COMPILER  = ICC
 else
-	# Gnu compiler GCC
-	CXX       = g++
-	LD        = g++
+        # Gnu compiler GCC
+	CXX       = /usr/local/Cellar/gcc/12.1.0/bin/gcc-12
+	LD        = /usr/local/Cellar/gcc/12.1.0/bin/g++-12
 	CXXFLAGS += -fopenmp
 	LDFLAGS  += -lgomp
 	COMPILER  = GCC
@@ -43,7 +43,7 @@ $(BINDIR)/$(PROGRAM): $(OBJECTS)
 	@mkdir -p $(@D)
 	$(LD)  $(OBJECTS)  $(LDFLAGS) -o $@
 	@echo "Linking complete!"
-	
+
 $(OBJECTS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
